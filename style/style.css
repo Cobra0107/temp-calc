@@ -1,4 +1,30 @@
-.calc-container {
-    max-width: 80%;
-    border: 1px brown;
+.calculator-wrapper {
+  max-width: 80%;
+  border: 2px black;
+  margin: 0 auto;
+  display: block;
+}
+
+.celsius-wrapper {
+  margin: 10px;
+  border: 1px black;
+  float: left;
+  display: block;
+}
+
+.farenheit-wrapper {
+  margin: 10px;
+  border: 1px black;
+  float: left;
+  display: block;
+}
+
+.farenheit-wrapper .label {
+  color: #000000;
+  font-size: 16px;
+}
+
+.celsius-wrapper .label {
+  color: #000000;
+  font-size: 16px;
 }

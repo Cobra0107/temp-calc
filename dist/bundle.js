@@ -67,6 +67,10 @@
 
 	var _celsius2 = _interopRequireDefault(_celsius);
 
+	var _farenheit = __webpack_require__(27);
+
+	var _farenheit2 = _interopRequireDefault(_farenheit);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -84,16 +88,74 @@
 	  function Calculate(props) {
 	    _classCallCheck(this, Calculate);
 
-	    return _possibleConstructorReturn(this, (Calculate.__proto__ || Object.getPrototypeOf(Calculate)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (Calculate.__proto__ || Object.getPrototypeOf(Calculate)).call(this, props));
+
+	    _this.handleFarenheit = function (temperature, scale) {
+	      _this.setState({ temperature: temperature, scale: scale });
+	    };
+
+	    _this.handleCelcius = function (temperature, scale) {
+	      _this.setState({ temperature: temperature, scale: scale });
+	    };
+
+	    _this.convert = function (temperature, convertFunc) {
+	      var temp = parseFloat(temperature);
+	      if (isNaN(temp)) {
+	        return '';
+	      }
+	      var change = convertFunc(temp);
+	      var roundup = change * 1000 / 1000;
+	      console.log("final: " + roundup);
+	      return roundup.toString();
+	    };
+
+	    _this.toFarenheit = function (celsius) {
+	      console.log("celsius" + celsius);
+	      return celsius * 9 / 5 + 32;
+	    };
+
+	    _this.toCelsius = function (farenheit) {
+	      console.log("faren" + farenheit);
+	      return (farenheit - 32) * 5 / 9;
+	    };
+
+	    _this.state = {
+	      scale: "",
+	      cScale: 'c',
+	      fScale: 'f',
+	      temperature: 0
+	    };
+	    return _this;
 	  }
 
 	  _createClass(Calculate, [{
 	    key: 'render',
 	    value: function render() {
+	      var scale = this.state.scale;
+	      console.log(scale);
+	      var temperature = this.state.temperature;
+	      var celsius = scale === this.state.fScale ? this.convert(temperature, this.toCelsius) : temperature;
+	      var farenheit = scale === this.state.cScale ? this.convert(temperature, this.toFarenheit) : temperature;
+
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'calculator-wrapper' },
-	        _react2.default.createElement(_celsius2.default, null)
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'calculator' },
+	          _react2.default.createElement(_celsius2.default
+	          // value = { this.state.temperature }
+	          , { temperature: celsius,
+	            scale: this.state.fScale,
+	            onChange: this.handleCelcius
+	          }),
+	          _react2.default.createElement(_farenheit2.default
+	          // value = { this.state.temperature }
+	          , { temperature: farenheit,
+	            scale: this.state.cScale,
+	            onChange: this.handleFarenheit
+	          })
+	        )
 	      );
 	    }
 	  }]);
@@ -19512,10 +19574,7 @@
 	  function Celsius(props) {
 	    _classCallCheck(this, Celsius);
 
-	    var _this = _possibleConstructorReturn(this, (Celsius.__proto__ || Object.getPrototypeOf(Celsius)).call(this, props));
-
-	    _this.state = { celsius: 'type' };
-	    return _this;
+	    return _possibleConstructorReturn(this, (Celsius.__proto__ || Object.getPrototypeOf(Celsius)).call(this, props));
 	  }
 
 	  _createClass(Celsius, [{
@@ -19526,18 +19585,23 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'celsius-wrapper' },
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'label' },
+	          'Celsius'
+	        ),
 	        _react2.default.createElement('input', { className: 'cesius-input',
-	          value: this.state.celsius,
+	          value: this.props.temperature,
 	          onChange: function onChange(event) {
-	            return _this2.onInputChange(event.target.value);
+	            return _this2.onInputChange(event.target.value, _this2.props.scale);
 	          }
 	        })
 	      );
 	    }
 	  }, {
 	    key: 'onInputChange',
-	    value: function onInputChange(celsius) {
-	      this.setState({ celsius: celsius });
+	    value: function onInputChange(celsius, scale) {
+	      this.props.onChange(celsius, scale);
 	    }
 	  }]);
 
@@ -19545,6 +19609,73 @@
 	}(_react.Component);
 
 	exports.default = Celsius;
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Farenheit = function (_Component) {
+	  _inherits(Farenheit, _Component);
+
+	  function Farenheit(props) {
+	    _classCallCheck(this, Farenheit);
+
+	    return _possibleConstructorReturn(this, (Farenheit.__proto__ || Object.getPrototypeOf(Farenheit)).call(this, props));
+	  }
+
+	  _createClass(Farenheit, [{
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'farenheit-wrapper' },
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'label' },
+	          'Farenheit'
+	        ),
+	        _react2.default.createElement('input', { className: 'farenheit-input',
+	          value: this.props.temperature,
+	          onChange: function onChange(event) {
+	            return _this2.onInputChange(event.target.value, _this2.props.scale);
+	          }
+	        })
+	      );
+	    }
+	  }, {
+	    key: 'onInputChange',
+	    value: function onInputChange(farenheit, scale) {
+	      this.props.onChange(farenheit, scale);
+	      this.setState(farenheit);
+	    }
+	  }]);
+
+	  return Farenheit;
+	}(_react.Component);
+
+	exports.default = Farenheit;
 
 /***/ })
 /******/ ]);
