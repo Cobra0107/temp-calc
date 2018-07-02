@@ -41,7 +41,7 @@ class Calculate extends Component {
   }
 
   toCelsius = (farenheit) => {
-    console.log("faren" + farenheit);
+    console.log("inside farenheit function.");
     return (farenheit - 32) * 5 / 9;
   }
 
@@ -49,8 +49,10 @@ class Calculate extends Component {
     const scale = this.state.scale;
     console.log(scale);
     const temperature = this.state.temperature;
-    const celsius = scale === this.state.fScale ? this.convert(temperature, this.toCelsius) : temperature;
-    const farenheit = scale === this.state.cScale ? this.convert(temperature, this.toFarenheit) : temperature;
+    const celsius  = scale === this.state.cScale ? this.convert(temperature, this.toCelsius) : temperature;;
+    const farenheit = scale === this.state.fScale ? this.convert(temperature, this.toFarenheit) : temperature;
+    console.log(celsius);
+    console.log(celsius);
 
     return(
       <div className='calculator-wrapper'>

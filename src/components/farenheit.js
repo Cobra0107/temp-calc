@@ -19,7 +19,7 @@ class Farenheit extends Component {
 
   onInputChange(farenheit, scale) {
     this.props.onChange(farenheit, scale);
-    this.setState(farenheit);
+    // this.setState(farenheit);
   }
 }
 

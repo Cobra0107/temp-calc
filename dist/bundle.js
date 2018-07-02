@@ -115,7 +115,7 @@
 	    };
 
 	    _this.toCelsius = function (farenheit) {
-	      console.log("faren" + farenheit);
+	      console.log("inside farenheit function.");
 	      return (farenheit - 32) * 5 / 9;
 	    };
 
@@ -134,8 +134,10 @@
 	      var scale = this.state.scale;
 	      console.log(scale);
 	      var temperature = this.state.temperature;
-	      var celsius = scale === this.state.fScale ? this.convert(temperature, this.toCelsius) : temperature;
-	      var farenheit = scale === this.state.cScale ? this.convert(temperature, this.toFarenheit) : temperature;
+	      var celsius = scale === this.state.cScale ? this.convert(temperature, this.toCelsius) : temperature;;
+	      var farenheit = scale === this.state.fScale ? this.convert(temperature, this.toFarenheit) : temperature;
+	      console.log(celsius);
+	      console.log(celsius);
 
 	      return _react2.default.createElement(
 	        'div',
@@ -19668,7 +19670,7 @@
 	    key: 'onInputChange',
 	    value: function onInputChange(farenheit, scale) {
 	      this.props.onChange(farenheit, scale);
-	      this.setState(farenheit);
+	      // this.setState(farenheit);
 	    }
 	  }]);
 
